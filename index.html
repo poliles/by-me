@@ -1,0 +1,1858 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BY ME — свадебная флористика для&nbsp;агентств</title>
+  <meta name="description" content="Чёрно-белый структурный прототип персонализированного B2B-лендинга BY ME для свадебных организаторов и агентств." />
+
+  <!--
+    Шрифты не включены в файл.
+    Положите файлы рядом с index.html в папку /fonts или замените пути ниже.
+
+    Логотип BY ME:
+    положите файл логотипа в root рядом с index.html с названием logo_byme.
+    Сейчас путь в коде: ./logo_byme
+  -->
+  <style>
+    @font-face {
+      font-family: "Jun";
+      src: url("./fonts/Jun.woff2") format("woff2"),
+           url("./fonts/Jun.woff") format("woff");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "Vela Sans";
+      src: url("./fonts/VelaSans-Regular.woff2") format("woff2"),
+           url("./fonts/VelaSans-Regular.woff") format("woff");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "Vela Sans";
+      src: url("./fonts/VelaSans-SemiBold.woff2") format("woff2"),
+           url("./fonts/VelaSans-SemiBold.woff") format("woff");
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: "Kobzar KS";
+      src: url("./fonts/KobzarKS.woff2") format("woff2"),
+           url("./fonts/KobzarKS.woff") format("woff");
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --bg: #f3f0ea;
+      --paper: #fbfaf7;
+      --ink: #101010;
+      --muted: rgba(16, 16, 16, 0.58);
+      --soft-muted: rgba(16, 16, 16, 0.38);
+      --line: rgba(16, 16, 16, 0.16);
+      --line-strong: rgba(16, 16, 16, 0.72);
+      --container: min(1720px, calc(100vw - 48px));
+      --ease: cubic-bezier(.19, 1, .22, 1);
+      --font-heading: "Jun", "Times New Roman", serif;
+      --font-body: "Vela Sans", Arial, sans-serif;
+      --font-accent: "Kobzar KS", "Times New Roman", serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: var(--font-body);
+      font-weight: 400;
+      text-rendering: geometricPrecision;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden; /* Защита от горизонтального скролла */
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button, input, textarea { font: inherit; }
+
+    ::selection {
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    .page-shell {
+      width: var(--container);
+      margin: 0 auto;
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
+
+    .preloader-line {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 200;
+      width: 100%;
+      height: 2px;
+      background: var(--ink);
+      transform-origin: left center;
+      transform: scaleX(0);
+      animation: loadLine 1.2s var(--ease) forwards;
+      pointer-events: none;
+    }
+
+    @keyframes loadLine {
+      to { transform: scaleX(1); }
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(18px);
+      background: rgba(243, 240, 234, 0.84);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      width: var(--container);
+      min-height: 104px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 24px;
+      position: relative;
+    }
+
+    .brand-lockup {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 1;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .logo-wrap {
+      width: 160px;
+      height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      flex: 0 0 160px;
+    }
+
+    .logo-img {
+      width: 160px;
+      height: 74px;
+      object-fit: contain;
+    }
+
+    .logo-fallback {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 160px;
+      height: 74px;
+      border: 1px solid var(--ink);
+      font-family: var(--font-heading);
+      font-size: 34px;
+      line-height: 1;
+    }
+
+    .partner-placeholder {
+      padding: 9px 13px 8px;
+      border: 1px dashed var(--line-strong);
+      color: var(--muted);
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      justify-self: center;
+      gap: clamp(18px, 3vw, 54px);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .burger-toggle {
+      display: none;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: 1px solid var(--ink);
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .burger-toggle span {
+      position: absolute;
+      left: 11px;
+      width: 20px;
+      height: 1px;
+      background: currentColor;
+      transition: transform .35s var(--ease), top .35s var(--ease), opacity .25s var(--ease);
+    }
+
+    .burger-toggle span:nth-child(1) { top: 15px; }
+    .burger-toggle span:nth-child(2) { top: 21px; }
+    .burger-toggle span:nth-child(3) { top: 27px; }
+
+    body.menu-open .burger-toggle span:nth-child(1) { top: 21px; transform: rotate(45deg); }
+    body.menu-open .burger-toggle span:nth-child(2) { opacity: 0; }
+    body.menu-open .burger-toggle span:nth-child(3) { top: 21px; transform: rotate(-45deg); }
+
+    .mobile-menu-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 140;
+      background: rgba(16,16,16,.28);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .35s var(--ease);
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 150;
+      width: min(420px, 86vw);
+      height: 100vh;
+      padding: 104px 28px 32px;
+      background: var(--bg);
+      border-left: 1px solid var(--ink);
+      transform: translateX(100%);
+      transition: transform .45s var(--ease);
+      display: grid;
+      align-content: start;
+      gap: 22px;
+    }
+
+    .mobile-menu a {
+      display: block;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--line);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    body.menu-open .mobile-menu-backdrop {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    body.menu-open .mobile-menu {
+      transform: translateX(0);
+    }
+
+    .nav-links a {
+      position: relative;
+      padding-block: 8px;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: right center;
+      transition: transform .45s var(--ease);
+    }
+
+    .nav-links a:hover::after {
+      transform: scaleX(1);
+      transform-origin: left center;
+    }
+
+    .header-action { justify-self: end; }
+
+    .btn {
+      --btn-bg: transparent;
+      --btn-color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      min-height: 48px;
+      padding: 15px 24px 14px;
+      border: 1px solid var(--ink);
+      background: var(--btn-bg);
+      color: var(--btn-color);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 11px;
+      line-height: 1;
+      text-transform: uppercase;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+      transition: color .45s var(--ease), border-color .45s var(--ease), transform .45s var(--ease);
+    }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: var(--ink);
+      transform: translateY(102%);
+      transition: transform .45s var(--ease);
+    }
+
+    .btn:hover {
+      color: var(--bg);
+      transform: translateY(-2px);
+    }
+
+    .btn:hover::before { transform: translateY(0); }
+
+    .btn--dark {
+      --btn-bg: var(--ink);
+      --btn-color: var(--bg);
+    }
+
+    .btn--dark::before { background: var(--bg); }
+    .btn--dark:hover { color: var(--ink); }
+
+    .section {
+      position: relative;
+      padding: clamp(88px, 9.5vw, 170px) 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-kicker,
+    .eyebrow,
+    .caption,
+    .tag,
+    .contact-label,
+    .mini-note {
+      margin: 0;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 11px;
+      line-height: 1.4;
+      letter-spacing: 0;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .section-kicker {
+      font-size: clamp(13px, 0.95vw, 15px);
+    }
+
+    .section-heading {
+      display: grid;
+      gap: clamp(16px, 1.5vw, 26px);
+    }
+
+    .section-title {
+      margin: 0;
+      font-family: var(--font-heading);
+      font-weight: 400;
+      line-height: 0.94;
+      letter-spacing: -0.006em;
+      word-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: clamp(62px, 9vw, 96px);
+    }
+
+    .section-title--medium { font-size: clamp(50px, 7.2vw, 96px); }
+
+    .hero-title {
+      margin: 0;
+      max-width: 980px;
+      font-family: var(--font-heading);
+      font-weight: 400;
+      font-size: clamp(62px, 9vw, 96px);
+      line-height: 0.92;
+      letter-spacing: -0.004em;
+      word-spacing: 0.17em;
+      text-transform: uppercase;
+    }
+
+    .hero-title .line { display: block; }
+    .hero-title .line:nth-child(2) { padding-left: clamp(56px, 7vw, 128px); }
+    .hero-title .line:nth-child(3) { padding-left: 0; }
+    .hero-title .line:nth-child(4) { padding-left: clamp(56px, 7vw, 128px); }
+
+    .body-large {
+      margin: 0;
+      font-size: clamp(23px, 2.45vw, 46px);
+      line-height: 1.12;
+      letter-spacing: -0.012em;
+    }
+
+    .body-copy {
+      margin: 0;
+      font-size: clamp(16px, 1.25vw, 20px);
+      line-height: 1.5;
+      color: rgba(16,16,16,.82);
+    }
+
+    .hand-note {
+      margin: 0;
+      font-family: var(--font-accent);
+      font-size: clamp(22px, 2vw, 34px);
+      line-height: 1.08;
+      letter-spacing: 0;
+      color: rgba(16,16,16,.76);
+    }
+
+    .num,
+    .card-number {
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 11px;
+      line-height: 1.1;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .hero {
+      min-height: calc(100vh - 76px);
+      padding: clamp(40px, 5vw, 84px) 0 clamp(42px, 4.5vw, 78px);
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: clamp(48px, 6vw, 92px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: flex-start;
+    }
+
+    .hero-main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(320px, .88fr);
+      gap: clamp(24px, 4vw, 78px);
+      align-items: stretch;
+    }
+
+    .hero-copy {
+      min-height: 620px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 46px;
+    }
+
+    .hero-bottom {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(260px, .55fr);
+      gap: 38px;
+      align-items: end;
+    }
+
+    .hero-subtitle { max-width: 740px; }
+
+    .hero-media {
+      position: relative;
+      min-height: 620px;
+      align-self: stretch;
+      border: 1px solid var(--ink);
+      background: var(--paper);
+      overflow: hidden;
+      transform: translateZ(0); /* Аппаратное ускорение вместо !important */
+      will-change: transform, opacity;
+    }
+
+    .hero-media::before {
+      content: "ВИЗУАЛ / ВИДЕО";
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      z-index: 2;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .hero-media::after {
+      content: "";
+      position: absolute;
+      inset: 12%;
+      border: 1px solid var(--line-strong);
+      background: rgba(16,16,16,.035);
+      transform: rotate(-3deg);
+      z-index: 0;
+    }
+
+    .hero-media-mark {
+      position: absolute;
+      left: 24px;
+      bottom: 24px;
+      max-width: 290px;
+      z-index: 2;
+    }
+
+    .marquee {
+      overflow: hidden;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--paper);
+    }
+
+    .marquee:hover .marquee-track {
+      animation-play-state: paused;
+    }
+
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 30s linear infinite;
+    }
+
+    .marquee span {
+      display: inline-flex;
+      padding: 13px 14px 12px;
+      font-family: var(--font-body);
+      font-size: clamp(11px, .9vw, 14px);
+      font-weight: 600;
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: 0;
+      white-space: nowrap;
+      color: rgba(16,16,16,.52);
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .split-intro {
+      display: grid;
+      grid-template-columns: minmax(260px, .82fr) minmax(0, 1.18fr);
+      gap: clamp(36px, 7vw, 120px);
+      align-items: start;
+    }
+
+    .intro-side {
+      position: sticky;
+      top: 116px;
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .intro-side .caption {
+      width: min(100%, 390px);
+      max-width: 390px;
+    }
+
+    .intro-mark {
+      width: min(100%, 390px);
+      aspect-ratio: 1 / 1.08;
+      border: 1px solid var(--ink);
+      background: var(--paper);
+      display: grid;
+      place-items: center;
+      font-family: var(--font-heading);
+      font-size: clamp(44px, 5.4vw, 88px);
+      line-height: .9;
+      letter-spacing: 0;
+      word-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .intro-content {
+      display: grid;
+      gap: clamp(42px, 5vw, 76px);
+    }
+
+    .intro-copy-grid {
+      display: grid;
+      grid-template-columns: minmax(0, .84fr) minmax(220px, .5fr);
+      gap: clamp(30px, 5vw, 88px);
+      align-items: start;
+    }
+
+    .quote-panel {
+      border-left: 1px solid var(--ink);
+      padding-left: 24px;
+      min-height: 190px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 18px;
+    }
+
+    .quote-panel .body-large { max-width: 700px; }
+
+    .about-compact {
+      display: grid;
+      grid-template-columns: minmax(0, .92fr) minmax(280px, .54fr);
+      gap: clamp(30px, 5vw, 88px);
+      align-items: end;
+      padding-top: clamp(16px, 2vw, 34px);
+      border-top: 1px solid var(--line-strong);
+    }
+
+    .about-compact-main {
+      display: grid;
+      gap: clamp(22px, 2.2vw, 36px);
+      max-width: 640px;
+    }
+
+    .about-lead {
+      grid-column: 1 / -1;
+      width: 100%;
+      max-width: 1040px;
+    }
+
+    .about-compact-side {
+      display: grid;
+      gap: 18px;
+      align-content: start;
+    }
+
+    .about-compact-side .hand-note {
+      max-width: 280px;
+    }
+
+    .offers-head,
+    .cases-head,
+    .process-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, .45fr);
+      gap: 48px;
+      align-items: end;
+      margin-bottom: clamp(54px, 7vw, 116px);
+    }
+
+    .offer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      border-top: 1px solid var(--ink);
+      border-left: 1px solid var(--ink);
+    }
+
+    .offer-card {
+      min-height: 430px;
+      padding: clamp(18px, 1.8vw, 30px);
+      border-right: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+      background: rgba(251,250,247,.44);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: clamp(18px, 1.8vw, 28px);
+      transition: background .45s var(--ease), transform .45s var(--ease);
+      position: relative;
+      z-index: 1;
+    }
+
+    .offer-card:hover {
+      background: var(--paper);
+      transform: translateY(-4px);
+    }
+
+    .offer-number {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .offer-visual {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border: 1px solid var(--ink);
+      background: var(--paper);
+      overflow: hidden;
+    }
+
+    .offer-visual::before {
+      content: attr(data-label);
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 2;
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 600;
+      line-height: 1;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .offer-visual::after {
+      content: "";
+      position: absolute;
+      inset: 16%;
+      border: 1px solid var(--line-strong);
+      background: rgba(16,16,16,.035);
+      transform: rotate(-2deg);
+      z-index: 0;
+    }
+
+    .offer-card-body {
+      display: grid;
+      gap: 0;
+      margin-top: clamp(10px, 1.2vw, 22px);
+      position: relative;
+      z-index: 3;
+    }
+
+    .offer-card h3,
+    .advantage-card h3,
+    .process-item h3,
+    .case-copy h3 {
+      margin: 0;
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: clamp(19px, 1.65vw, 28px);
+      line-height: 1.12;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .offer-card p,
+    .advantage-card p,
+    .process-item p,
+    .case-copy p {
+      margin: 0;
+      font-size: clamp(16px, 1.25vw, 20px);
+      line-height: 1.5;
+      color: rgba(16,16,16,.78);
+    }
+
+    /* === ИСПРАВЛЕНИЕ 3: Блок примерки 50/50 === */
+    .try-on {
+      margin-top: clamp(24px, 3.4vw, 58px);
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* Строго пополам */
+      min-height: clamp(520px, 48vw, 780px);
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--bg);
+      overflow: hidden;
+    }
+
+    .try-on-visual {
+      position: relative;
+      height: 100%;
+      min-height: 100%;
+      background: var(--paper);
+      border-right: 1px solid var(--ink);
+      overflow: hidden;
+    }
+
+    .try-on-visual::before {
+      content: attr(data-label);
+      position: absolute;
+      top: 22px;
+      left: 22px;
+      z-index: 2;
+      font-family: var(--font-body);
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .try-on-visual::after {
+      content: "";
+      position: absolute;
+      inset: 12%;
+      border: 1px solid var(--line-strong);
+      background: rgba(16,16,16,.035);
+      transform: rotate(-2.5deg);
+      z-index: 0;
+    }
+
+    .try-on-photo-note {
+      position: absolute;
+      left: 22px;
+      bottom: 22px;
+      z-index: 2;
+      max-width: 260px;
+      color: rgba(16,16,16,.76);
+    }
+
+    .try-on-content {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: clamp(28px, 4vw, 72px);
+      padding: clamp(30px, 4vw, 72px);
+      height: 100%;
+      align-content: center; /* Вертикальное центрирование */
+      position: relative;
+      z-index: 3;
+    }
+
+    .try-on-title {
+      display: grid;
+      gap: clamp(22px, 2.4vw, 42px);
+      align-self: start;
+    }
+
+    .try-on-title h3 {
+      margin: 0;
+      font-family: var(--font-heading);
+      font-weight: 400;
+      font-size: clamp(48px, 6.6vw, 116px);
+      line-height: .94;
+      letter-spacing: -0.004em;
+      word-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .try-on-text {
+      display: grid;
+      gap: clamp(12px, 1.4vw, 20px);
+      max-width: 620px;
+      align-self: center;
+    }
+
+    .try-on-text p {
+      margin: 0;
+      color: rgba(243,240,234,.84);
+      font-size: clamp(16px, 1.25vw, 20px);
+      line-height: 1.5;
+    }
+
+    .try-on-note {
+      display: grid;
+      grid-template-columns: minmax(160px, .38fr) minmax(0, 1fr);
+      gap: clamp(22px, 3vw, 54px);
+      align-items: end;
+      padding-top: clamp(22px, 2.6vw, 44px);
+      border-top: 1px solid rgba(243,240,234,.28);
+    }
+
+    .try-on-note .hand-note {
+      color: var(--bg);
+      max-width: 260px;
+    }
+
+    .try-on .num {
+      color: rgba(243,240,234,.68);
+    }
+
+    .case-stack {
+      display: grid;
+      gap: clamp(70px, 8vw, 132px);
+    }
+
+    .case-card {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: clamp(28px, 3.6vw, 64px);
+      align-items: stretch;
+      padding-bottom: clamp(34px, 4vw, 72px);
+      border-bottom: 1px solid var(--line-strong);
+    }
+
+    .case-copy {
+      min-height: auto;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      display: grid;
+      grid-template-columns: clamp(96px, 13vw, 228px) minmax(0, 1fr);
+      gap: clamp(24px, 4vw, 72px);
+      align-items: start;
+    }
+
+    .case-index {
+      margin-top: -0.08em;
+      font-family: var(--font-heading);
+      font-size: clamp(64px, 7.2vw, 126px);
+      font-weight: 400;
+      line-height: .78;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .case-copy-inner {
+      display: grid;
+      gap: 0;
+      max-width: 1320px;
+      position: relative;
+      z-index: 3;
+    }
+
+    .case-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: clamp(10px, 1vw, 16px);
+      margin-bottom: clamp(34px, 3.2vw, 58px);
+    }
+
+    .tag {
+      display: inline-flex;
+      padding: clamp(13px, 1.12vw, 19px) clamp(17px, 1.6vw, 30px) clamp(12px, 1.05vw, 18px);
+      border: 1px solid var(--line-strong);
+      background: transparent;
+      font-family: var(--font-body);
+      font-size: clamp(11px, .92vw, 15px);
+      font-weight: 600;
+      line-height: 1;
+      text-transform: uppercase;
+      color: rgba(16,16,16,.7);
+    }
+
+    .offer-card-body h3,
+    .case-copy h3 {
+      margin-bottom: clamp(10px, 1vw, 18px);
+    }
+
+    .case-copy p {
+      max-width: 1240px;
+    }
+
+    .case-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(16px, 1.8vw, 32px);
+    }
+
+    .case-visual {
+      position: relative;
+      width: 100%;
+      min-height: clamp(260px, 23vw, 430px);
+      border: 1px solid var(--ink);
+      background: var(--paper);
+      overflow: hidden;
+    }
+
+    .case-visual::before {
+      content: attr(data-label);
+      position: absolute;
+      top: 22px;
+      left: 22px;
+      z-index: 2;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .case-visual::after {
+      content: "";
+      position: absolute;
+      inset: 13%;
+      border: 1px solid var(--line-strong);
+      background: rgba(16,16,16,.035);
+      transform: rotate(var(--rotate, -2deg));
+      z-index: 0;
+    }
+
+    .case-note {
+      width: min(760px, 100%);
+      margin: clamp(42px, 4.2vw, 72px) 0 0 auto;
+      font-size: clamp(16px, 1.25vw, 20px);
+      line-height: 1.5;
+      letter-spacing: 0;
+    }
+
+    .advantages {
+      background: var(--ink);
+      color: var(--bg);
+      overflow: visible;
+    }
+
+    .advantages.page-shell,
+    .advantages .page-shell {
+      overflow: visible;
+    }
+
+    .advantages .section-kicker,
+    .advantages .body-copy,
+    .advantages .num { color: rgba(243,240,234,.68); }
+
+    .advantages-layout {
+      display: grid;
+      grid-template-columns: minmax(320px, .82fr) minmax(0, 1.18fr);
+      gap: clamp(36px, 7vw, 120px);
+      align-items: start;
+      overflow: visible;
+    }
+
+    .advantages-left {
+      position: sticky;
+      top: calc(104px + clamp(24px, 2vw, 36px));
+      align-self: start;
+      height: fit-content;
+      min-height: 0;
+      display: grid;
+      gap: clamp(24px, 3.2vw, 44px);
+    }
+
+    .advantages-copy {
+      display: grid;
+      gap: 18px;
+      max-width: 560px;
+    }
+
+    .advantage-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      border-top: 1px solid rgba(243,240,234,.42);
+      border-left: 1px solid rgba(243,240,234,.42);
+    }
+
+    .advantage-card {
+      min-height: 280px;
+      padding: clamp(24px, 2.4vw, 42px);
+      border-right: 1px solid rgba(243,240,234,.42);
+      border-bottom: 1px solid rgba(243,240,234,.42);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: clamp(28px, 3vw, 44px);
+      position: relative;
+      z-index: 1;
+    }
+
+    .advantage-card > div {
+      display: grid;
+      gap: 14px;
+      position: relative;
+      z-index: 3;
+    }
+
+    .advantage-card p { color: rgba(243,240,234,.72); }
+
+    .advantage-final {
+      grid-column: 1 / -1;
+      padding: clamp(28px, 3vw, 54px);
+      border-right: 1px solid rgba(243,240,234,.42);
+      border-bottom: 1px solid rgba(243,240,234,.42);
+      font-family: var(--font-heading);
+      font-size: clamp(24px, 5.5vw, 37px);
+      line-height: 1;
+      letter-spacing: -0.004em;
+      word-spacing: 0.14em;
+      text-transform: uppercase;
+      position: relative;
+      z-index: 3;
+    }
+
+    .process-list { border-top: 1px solid var(--ink); }
+
+    .process-item {
+      position: relative;
+      min-height: clamp(190px, 18vw, 280px);
+      display: grid;
+      grid-template-columns: clamp(110px, 15vw, 250px) minmax(260px, .36fr) minmax(340px, .64fr);
+      gap: clamp(28px, 4.5vw, 92px);
+      padding: clamp(30px, 3vw, 52px) 0;
+      border-bottom: 1px solid var(--ink);
+      align-items: start;
+      overflow: hidden;
+    }
+
+    .process-number {
+      margin-top: -0.05em;
+      font-family: var(--font-heading);
+      font-weight: 400;
+      font-size: clamp(64px, 7.2vw, 126px);
+      line-height: .78;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .process-item p {
+      max-width: 660px;
+    }
+
+    .process-line { display: none; }
+
+    .contact {
+      background: var(--ink);
+      color: var(--bg);
+      border-bottom: 0;
+    }
+
+    .contact-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(340px, .55fr);
+      gap: clamp(36px, 7vw, 128px);
+      align-items: end;
+    }
+
+    .contact-copy {
+      display: grid;
+      gap: clamp(28px, 4vw, 56px);
+    }
+
+    .contact-copy .body-copy,
+    .contact .section-kicker {
+      color: rgba(243,240,234,.76);
+      max-width: 690px;
+    }
+
+    .contact-panel {
+      border: 1px solid rgba(243,240,234,.38);
+      padding: clamp(24px, 3vw, 46px);
+      display: grid;
+      gap: 30px;
+      font-style: normal;
+      position: relative;
+      z-index: 3;
+    }
+
+    .contact-row {
+      display: grid;
+      gap: 9px;
+      padding-bottom: 21px;
+      border-bottom: 1px solid rgba(243,240,234,.24);
+    }
+
+    .contact-row:last-child {
+      padding-bottom: 0;
+      border-bottom: 0;
+    }
+
+    .contact-label { color: rgba(243,240,234,.52); }
+
+    .contact-value {
+      font-size: clamp(17px, 1.45vw, 24px);
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    .meta-note {
+      margin: 0;
+      font-size: 10px;
+      line-height: 1.35;
+      color: rgba(243,240,234,.48);
+    }
+
+    .contact .btn {
+      border-color: var(--bg);
+      color: var(--bg);
+      width: fit-content;
+    }
+
+    .contact .btn::before { background: var(--bg); }
+    .contact .btn:hover { color: var(--ink); }
+
+    .footer {
+      background: var(--ink);
+      color: rgba(243,240,234,.72);
+      border-top: 1px solid rgba(243,240,234,.24);
+      padding: 28px 0;
+    }
+
+    .footer-inner {
+      width: var(--container);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    /* === Анимации и reveal === */
+    .reveal {
+      opacity: 0;
+      transform: translateY(34px);
+      transition: opacity .9s var(--ease), transform .9s var(--ease);
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal[data-delay="1"] { transition-delay: .08s; }
+    .reveal[data-delay="2"] { transition-delay: .16s; }
+    .reveal[data-delay="3"] { transition-delay: .24s; }
+    .reveal[data-delay="4"] { transition-delay: .32s; }
+
+    /* === СЛОИ ДЛЯ ИЗОБРАЖЕНИЙ — ИСПРАВЛЕНИЕ 1 === */
+    .offer-visual img,
+    .hero-media img,
+    .try-on-visual img,
+    .case-visual img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .offer-visual::after,
+    .hero-media::after,
+    .try-on-visual::after,
+    .case-visual::after {
+      z-index: 0;
+    }
+
+    .offer-visual::before,
+    .hero-media::before,
+    .try-on-visual::before,
+    .case-visual::before {
+      z-index: 2;
+    }
+
+    .offer-card-body,
+    .try-on-content,
+    .case-copy-inner {
+      position: relative;
+      z-index: 3;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+
+    @media (max-width: 1180px) {
+      :root { --container: min(100vw - 32px, 980px); }
+
+      .nav { grid-template-columns: 1fr auto; }
+      .nav-links { display: none; }
+      .burger-toggle { display: inline-flex; justify-self: end; }
+      .header-action { display: none; }
+
+      .hero-main,
+      .split-intro,
+      .offers-head,
+      .cases-head,
+      .advantages-layout,
+      .process-head,
+      .contact-inner,
+      .about-compact {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-copy { min-height: auto; }
+      .hero-media { min-height: 520px; }
+      .hero-bottom { grid-template-columns: 1fr; }
+
+      .intro-side,
+      .advantages-left {
+        position: static;
+        min-height: auto;
+      }
+
+      .intro-mark { display: none; }
+      .offer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+      /* Мобильная версия try-on — стек */
+      .try-on {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .try-on-visual {
+        min-height: 420px;
+        border-right: 0;
+        border-bottom: 1px solid var(--ink);
+        height: auto;
+      }
+
+      .try-on-content {
+        align-content: start;
+      }
+
+      .case-card { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 980px) {
+      .process-item {
+        grid-template-columns: clamp(84px, 16vw, 140px) minmax(0, .44fr) minmax(0, .56fr);
+        gap: clamp(18px, 3vw, 34px);
+      }
+
+      .process-item > * {
+        min-width: 0;
+      }
+    }
+
+    @media (max-width: 760px) {
+      :root { --container: min(100vw - 24px, 640px); }
+
+      .nav { min-height: 82px; }
+
+      .brand-lockup {
+        gap: 8px;
+        font-size: 10px;
+      }
+
+      .logo-wrap,
+      .logo-img,
+      .logo-fallback {
+        width: 112px;
+        height: 52px;
+        flex-basis: 112px;
+      }
+
+      .partner-placeholder { display: none; }
+
+      .header-action .btn {
+        min-height: 42px;
+        padding: 13px 14px 12px;
+        font-size: 9px;
+      }
+
+      .hero {
+        min-height: auto;
+        gap: 42px;
+      }
+
+      .hero-topline { gap: 12px; }
+
+      .hero-title {
+        font-size: clamp(54px, 16vw, 88px);
+        word-spacing: 0.08em;
+      }
+
+      .hero-title .line:nth-child(2),
+      .hero-title .line:nth-child(3),
+      .hero-title .line:nth-child(4) { padding-left: 0; }
+
+      .hero-main { gap: 34px; }
+      .hero-media { min-height: 360px; }
+      .section { padding: 76px 0; }
+
+      .intro-copy-grid,
+      .offer-grid,
+      .advantage-grid,
+      .about-lead { grid-template-columns: 1fr; }
+
+      .offer-card,
+      .advantage-card { min-height: auto; }
+
+      .try-on-visual { min-height: 320px; }
+
+      .try-on-content { padding: 24px; }
+
+      .try-on-note { grid-template-columns: 1fr; }
+
+      .case-copy {
+        grid-template-columns: 1fr;
+        gap: 22px;
+      }
+
+      .case-gallery {
+        display: flex;
+        overflow-x: auto;
+        gap: 16px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 4px;
+      }
+
+      .case-gallery::-webkit-scrollbar { display: none; }
+
+      .case-visual {
+        flex: 0 0 100%;
+        min-height: 360px;
+        scroll-snap-align: start;
+      }
+
+      .case-index {
+        font-size: clamp(56px, 18vw, 86px);
+      }
+
+      .process-item {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        gap: 22px;
+      }
+
+      .process-number {
+        font-size: clamp(56px, 18vw, 86px);
+      }
+
+      .footer-inner { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="preloader-line" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <nav class="nav" aria-label="Главная навигация">
+      <a class="brand-lockup" href="#top" aria-label="BY ME">
+        <span class="logo-wrap">
+          <img class="logo-img" src="./logo_byme.svg" alt="BY ME" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';" />
+          <span class="logo-fallback">BY ME</span>
+        </span>
+        <span aria-hidden="true">×</span>
+        <span class="partner-placeholder">ЛОГО ПАРТНЕРА</span>
+      </a>
+
+      <div class="nav-links" aria-label="Разделы сайта">
+        <a href="#about">О&nbsp;нас</a>
+        <a href="#offers">Что&nbsp;делаем</a>
+        <a href="#cases">Кейсы</a>
+        <a href="#process">Процесс</a>
+      </div>
+
+      <div class="header-action">
+        <a class="btn" href="#contact">Обсудить проект</a>
+      </div>
+
+      <button class="burger-toggle" type="button" aria-label="Открыть меню" aria-controls="mobile-menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+  </header>
+
+  <div class="mobile-menu-backdrop" data-menu-close aria-hidden="true"></div>
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Мобильное меню">
+    <a href="#about" data-menu-close>О&nbsp;нас</a>
+    <a href="#offers" data-menu-close>Что&nbsp;делаем</a>
+    <a href="#cases" data-menu-close>Кейсы</a>
+    <a href="#process" data-menu-close>Процесс</a>
+    <a href="#contact" data-menu-close>Обсудить проект</a>
+  </nav>
+
+  <main id="top">
+    <section class="hero page-shell" aria-labelledby="hero-title">
+      <div class="hero-topline reveal">
+        <p class="eyebrow">Свадебная флористика</p>
+        <p class="eyebrow">Полный цикл оформления</p>
+      </div>
+
+      <div class="hero-main">
+        <div class="hero-copy">
+          <h1 class="hero-title reveal" id="hero-title" data-delay="1">
+            <span class="line">Цветы, фигкоторые</span>
+            <span class="line">помогают</span>
+            <span class="line">почувствовать</span>
+            <span class="line">главное</span>
+          </h1>
+
+          <div class="hero-bottom reveal" data-delay="2">
+            <p class="body-copy hero-subtitle">BY ME создает флористические решения для&nbsp;свадебных проектов — от&nbsp;букета невесты до&nbsp;полного оформления пространства, монтажа и&nbsp;сопровождения в&nbsp;день события.</p>
+            <a class="btn btn--dark" href="#contact">Связаться лично</a>
+          </div>
+        </div>
+
+        <div class="hero-media reveal" data-delay="3" aria-label="Место для сильного визуала или видео первого экрана">
+          <p class="hand-note hero-media-mark">цветы говорят громче слов</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Атмосфера</span><span>·</span><span>Детали</span><span>·</span><span>Сервис</span><span>·</span><span>Монтаж</span><span>·</span><span>Партнерство</span><span>·</span><span>Полный цикл</span><span>·</span>
+        <span>Атмосфера</span><span>·</span><span>Детали</span><span>·</span><span>Сервис</span><span>·</span><span>Монтаж</span><span>·</span><span>Партнерство</span><span>·</span><span>Полный цикл</span><span>·</span>
+      </div>
+    </div>
+
+    <section class="section page-shell" id="about" aria-labelledby="about-title">
+      <div class="split-intro">
+        <aside class="intro-side reveal">
+          <p class="section-kicker">01 / О&nbsp;BY ME</p>
+          <div class="intro-mark" aria-hidden="true">BY<br>ME</div>
+          <p class="caption">Авторская флористика, внимание к&nbsp;атмосфере и&nbsp;спокойная организация работы</p>
+        </aside>
+
+        <div class="intro-content">
+          <h2 class="section-title section-title--medium reveal" id="about-title">О&nbsp;студии</h2>
+
+          <div class="about-compact">
+            <p class="body-large about-lead reveal" data-delay="1">BY ME — цветочная студия с&nbsp;авторским взглядом на&nbsp;свадебную флористику.</p>
+
+            <div class="about-compact-main reveal" data-delay="2">
+              <p class="body-copy">Мы создаем оформление, где&nbsp;цветы работают на&nbsp;атмосферу, пространство и&nbsp;ощущение дня. Внимательно относимся к&nbsp;деталям, качеству реализации и&nbsp;спокойной организации процесса.</p>
+            </div>
+
+            <div class="about-compact-side reveal" data-delay="3">
+              <p class="hand-note">цветы как&nbsp;язык события</p>
+              <p class="body-copy">Красиво, уместно и&nbsp;точно по&nbsp;задаче.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section page-shell" id="offers" aria-labelledby="offers-title">
+      <div class="offers-head">
+        <div class="section-heading">
+          <p class="section-kicker reveal">02 / Что&nbsp;мы предлагаем</p>
+          <h2 class="section-title section-title--medium reveal" id="offers-title" data-delay="1">Отвечаем за&nbsp;всю флористику свадебного дня</h2>
+        </div>
+        <p class="body-copy reveal" data-delay="2">Мы берем на&nbsp;себя флористическую часть свадебного проекта — от&nbsp;первых идей и&nbsp;подбора цветов до&nbsp;подготовки, логистики, монтажа и&nbsp;финальной реализации на&nbsp;площадке.</p>
+      </div>
+
+      <div class="offer-grid">
+        <article class="offer-card reveal">
+          <div class="offer-number"><span class="num">{ 01 }</span><span class="caption">Свадебная флористика</span></div>
+          <div class="offer-visual" data-label="Фото услуги"></div>
+          <div class="offer-card-body">
+            <h3>Букет невесты и&nbsp;детали образа</h3>
+            <p>Букет невесты, бутоньерки, букеты для&nbsp;подружек невесты, цветочные аксессуары и&nbsp;детали образа.</p>
+          </div>
+        </article>
+
+        <article class="offer-card reveal" data-delay="1">
+          <div class="offer-number"><span class="num">{ 02 }</span><span class="caption">Церемония</span></div>
+          <div class="offer-visual" data-label="Фото услуги"></div>
+          <div class="offer-card-body">
+            <h3>Оформление церемонии</h3>
+            <p>Арки, проходы, президиум, зона клятв, композиции для&nbsp;выездной регистрации и&nbsp;ключевых точек пространства.</p>
+          </div>
+        </article>
+
+        <article class="offer-card reveal" data-delay="2">
+          <div class="offer-number"><span class="num">{ 03 }</span><span class="caption">Банкет</span></div>
+          <div class="offer-visual" data-label="Фото услуги"></div>
+          <div class="offer-card-body">
+            <h3>Декор столов</h3>
+            <p>Цветочные композиции, оформление гостевых столов, президиума, рассадки и&nbsp;банкетной зоны.</p>
+          </div>
+        </article>
+
+        <article class="offer-card reveal" data-delay="3">
+          <div class="offer-number"><span class="num">{ 04 }</span><span class="caption">Welcome</span></div>
+          <div class="offer-visual" data-label="Фото услуги"></div>
+          <div class="offer-card-body">
+            <h3>Welcome-зоны</h3>
+            <p>Цветочное оформление входной группы, приветственной зоны, плана рассадки и&nbsp;первых визуальных акцентов мероприятия.</p>
+          </div>
+        </article>
+
+        <article class="offer-card reveal" data-delay="1">
+          <div class="offer-number"><span class="num">{ 05 }</span><span class="caption">Инсталляции</span></div>
+          <div class="offer-visual" data-label="Фото услуги"></div>
+          <div class="offer-card-body">
+            <h3>Фотозоны и&nbsp;конструкции</h3>
+            <p>Цветочные конструкции, крупные композиции, подвесные элементы, декоративные решения для&nbsp;фото и&nbsp;видео.</p>
+          </div>
+        </article>
+
+        <article class="offer-card reveal" data-delay="2">
+          <div class="offer-number"><span class="num">{ 06 }</span><span class="caption">Сопровождение</span></div>
+          <div class="offer-visual" data-label="Фото услуги"></div>
+          <div class="offer-card-body">
+            <h3>Флористическое сопровождение</h3>
+            <p>Подбор цветов, адаптация под&nbsp;концепцию, подготовка, логистика, монтаж и&nbsp;работа команды BY ME на&nbsp;площадке.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="try-on reveal">
+        <div class="try-on-visual" data-label="Фото / примерка">
+          <p class="hand-note try-on-photo-note">букет + платье</p>
+        </div>
+        <div class="try-on-content">
+          <div class="try-on-title">
+            <p class="num">ОСОБАЯ УСЛУГА</p>
+            <h3>Примерка букета с&nbsp;образом невесты</h3>
+          </div>
+          <div class="try-on-text">
+            <p>Для&nbsp;проектов, где&nbsp;особенно важна точность образа, мы можем провести примерку букета с&nbsp;платьем или полным свадебным образом.</p>
+            <p>Это&nbsp;помогает заранее увидеть, как&nbsp;форма, оттенки, фактура и&nbsp;масштаб букета сочетаются с&nbsp;платьем, аксессуарами и&nbsp;общей стилистикой свадьбы.</p>
+          </div>
+          <div class="try-on-note">
+            <p class="hand-note">точная деталь образа</p>
+            <p class="body-copy" style="color: rgba(243,240,234,.76);">Так букет становится не&nbsp;просто красивой деталью, а&nbsp;естественным продолжением образа невесты.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section page-shell" id="cases" aria-labelledby="cases-title">
+      <div class="cases-head">
+        <div class="section-heading">
+          <p class="section-kicker reveal">03 / Примеры оформлений</p>
+          <h2 class="section-title section-title--medium reveal" id="cases-title" data-delay="1">Кейсы</h2>
+        </div>
+        <p class="body-copy reveal" data-delay="2">Каждый проект BY ME — это&nbsp;работа с&nbsp;атмосферой, пространством, деталями и&nbsp;ощущением события.</p>
+      </div>
+
+      <div class="case-stack">
+        <article class="case-card reveal">
+          <div class="case-copy">
+            <div class="case-index">01</div>
+            <div class="case-copy-inner">
+              <div class="case-tags">
+                <span class="tag">Букет</span>
+                <span class="tag">Церемония</span>
+                <span class="tag">Монтаж</span>
+              </div>
+              <h3>[Название проекта / площадка]</h3>
+              <p>Флористическое оформление свадьбы с&nbsp;акцентом на&nbsp;атмосферу, цветовую палитру и&nbsp;цельность визуальной концепции. BY ME отвечала за&nbsp;букет невесты, оформление церемонии, декор столов, welcome-зону и&nbsp;монтаж.</p>
+            </div>
+          </div>
+          <div class="case-gallery" aria-label="Галерея проекта">
+            <div class="case-visual" data-label="Фото 1" style="--rotate: -2deg"></div>
+            <div class="case-visual" data-label="Фото 2" style="--rotate: 1deg"></div>
+            <div class="case-visual" data-label="Фото 3" style="--rotate: -1deg"></div>
+          </div>
+        </article>
+
+        <article class="case-card reveal">
+          <div class="case-copy">
+            <div class="case-index">02</div>
+            <div class="case-copy-inner">
+              <div class="case-tags">
+                <span class="tag">Пространство</span>
+                <span class="tag">Свет</span>
+                <span class="tag">Фото-точки</span>
+              </div>
+              <h3>[Название проекта / площадка]</h3>
+              <p>Проект, в&nbsp;котором флористика стала частью общей визуальной концепции события. Композиции были разработаны с&nbsp;учетом пространства, света, маршрута гостей и&nbsp;ключевых фото-точек.</p>
+            </div>
+          </div>
+          <div class="case-gallery" aria-label="Галерея проекта">
+            <div class="case-visual" data-label="Фото 1" style="--rotate: 2deg"></div>
+            <div class="case-visual" data-label="Фото 2" style="--rotate: -1deg"></div>
+            <div class="case-visual" data-label="Фото 3" style="--rotate: 1.5deg"></div>
+          </div>
+        </article>
+
+        <article class="case-card reveal">
+          <div class="case-copy">
+            <div class="case-index">03</div>
+            <div class="case-copy-inner">
+              <div class="case-tags">
+                <span class="tag">Камерность</span>
+                <span class="tag">Баланс</span>
+                <span class="tag">Детали</span>
+              </div>
+              <h3>[Название проекта / площадка]</h3>
+              <p>Камерное или масштабное оформление, где&nbsp;было важно сохранить баланс между выразительностью, легкостью и&nbsp;точной реализацией деталей.</p>
+            </div>
+          </div>
+          <div class="case-gallery" aria-label="Галерея проекта">
+            <div class="case-visual" data-label="Фото 1" style="--rotate: -1deg"></div>
+            <div class="case-visual" data-label="Фото 2" style="--rotate: 1deg"></div>
+            <div class="case-visual" data-label="Фото 3" style="--rotate: -2deg"></div>
+          </div>
+        </article>
+      </div>
+
+      <p class="case-note reveal">Каждый проект мы рассматриваем индивидуально: от&nbsp;общей атмосферы до&nbsp;технических нюансов площадки, сезонности цветов и&nbsp;тайминга монтажа.</p>
+    </section>
+
+    <section class="section advantages" id="advantages" aria-labelledby="advantages-title">
+      <div class="page-shell advantages-layout">
+        <div class="advantages-left">
+          <div class="section-heading">
+            <p class="section-kicker reveal">04 / Партнерство</p>
+            <h2 class="section-title section-title--medium reveal" id="advantages-title" data-delay="1">Почему с&nbsp;нами спокойно работать</h2>
+          </div>
+          <div class="advantages-copy reveal" data-delay="2">
+            <p class="body-copy">Для&nbsp;свадебного агентства важны не&nbsp;только красивые цветы, но&nbsp;и&nbsp;предсказуемый процесс: понятная коммуникация, соблюдение сроков, аккуратная подготовка и&nbsp;уверенная работа команды в&nbsp;день мероприятия.</p>
+          </div>
+        </div>
+
+        <div class="advantage-grid">
+          <article class="advantage-card reveal">
+            <span class="num">{ 01 }</span>
+            <div>
+              <h3>Авторское видение</h3>
+              <p>Предлагаем флористические решения, которые поддерживают концепцию свадьбы и&nbsp;делают ее визуально цельной.</p>
+            </div>
+          </article>
+
+          <article class="advantage-card reveal" data-delay="1">
+            <span class="num">{ 02 }</span>
+            <div>
+              <h3>Полный цикл работы</h3>
+              <p>Берем на&nbsp;себя флористическую часть проекта от&nbsp;идеи и&nbsp;согласования до&nbsp;закупки, подготовки, монтажа и&nbsp;финальной реализации.</p>
+            </div>
+          </article>
+
+          <article class="advantage-card reveal" data-delay="2">
+            <span class="num">{ 03 }</span>
+            <div>
+              <h3>Стабильное качество</h3>
+              <p>Работаем со&nbsp;свежими цветами, проверенными поставщиками и&nbsp;вниманием к&nbsp;деталям на&nbsp;каждом этапе.</p>
+            </div>
+          </article>
+
+          <article class="advantage-card reveal" data-delay="3">
+            <span class="num">{ 04 }</span>
+            <div>
+              <h3>Аккуратная логистика и&nbsp;монтаж</h3>
+              <p>Продумываем не&nbsp;только визуальный результат, но&nbsp;и&nbsp;то, как&nbsp;все будет доставлено, собрано и&nbsp;реализовано на&nbsp;площадке.</p>
+            </div>
+          </article>
+
+          <div class="advantage-final reveal">Мы берем на&nbsp;себя цветы, детали и&nbsp;реализацию — чтобы агентство могло быть уверено в&nbsp;результате.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section page-shell" id="process" aria-labelledby="process-title">
+      <div class="process-head">
+        <div class="section-heading">
+          <p class="section-kicker reveal">05 / Процесс работы</p>
+          <h2 class="section-title section-title--medium reveal" id="process-title" data-delay="1">От&nbsp;идеи до&nbsp;монтажа</h2>
+        </div>
+        <p class="body-copy reveal" data-delay="2">Мы ведем флористическую часть проекта последовательно и&nbsp;прозрачно — от&nbsp;первого обсуждения до&nbsp;финальной реализации на&nbsp;площадке.</p>
+      </div>
+
+      <div class="process-list">
+        <article class="process-item reveal">
+          <div class="process-number">01</div>
+          <h3>Погружение в&nbsp;задачу</h3>
+          <p>Изучаем концепцию свадьбы, площадку, настроение, визуальные референсы, пожелания пары и&nbsp;задачи агентства.</p>
+          <span class="process-line" aria-hidden="true"></span>
+        </article>
+
+        <article class="process-item reveal">
+          <div class="process-number">02</div>
+          <h3>Разработка флористического решения</h3>
+          <p>Предлагаем направление по&nbsp;цветам, формам, палитре, фактурам и&nbsp;ключевым зонам оформления.</p>
+          <span class="process-line" aria-hidden="true"></span>
+        </article>
+
+        <article class="process-item reveal">
+          <div class="process-number">03</div>
+          <h3>Презентация и&nbsp;согласование</h3>
+          <p>Собираем решение в&nbsp;понятную презентацию: показываем настроение, основные элементы, состав работ и&nbsp;логику оформления.</p>
+          <span class="process-line" aria-hidden="true"></span>
+        </article>
+
+        <article class="process-item reveal">
+          <div class="process-number">04</div>
+          <h3>Подготовка к&nbsp;реализации</h3>
+          <p>Уточняем детали, согласовываем состав цветов, объемы, логистику, тайминг, команду и&nbsp;технические нюансы площадки.</p>
+          <span class="process-line" aria-hidden="true"></span>
+        </article>
+
+        <article class="process-item reveal">
+          <div class="process-number">05</div>
+          <h3>Воплощение командой BY ME</h3>
+          <p>Готовим цветы, доставляем оформление, выполняем монтаж и&nbsp;сопровождаем флористическую часть в&nbsp;день события.</p>
+          <span class="process-line" aria-hidden="true"></span>
+        </article>
+      </div>
+    </section>
+
+    <section class="section contact" id="contact" aria-labelledby="contact-title">
+      <div class="page-shell contact-inner">
+        <div class="contact-copy">
+          <div class="section-heading">
+            <p class="section-kicker reveal">06 / Личная связь</p>
+            <h2 class="section-title reveal" id="contact-title" data-delay="1">Давайте создадим проект, который запомнится</h2>
+          </div>
+          <p class="body-copy reveal" data-delay="2">Если вы ищете флористического партнера для&nbsp;свадебного проекта, мы будем рады обсудить задачу лично. Расскажите нам о&nbsp;концепции, площадке и&nbsp;формате события — а&nbsp;мы предложим флористическое решение, которое поддержит идею свадьбы и&nbsp;поможет реализовать ее на&nbsp;высоком уровне.</p>
+          <a class="btn reveal" data-delay="3" href="https://t.me/" target="_blank" rel="noreferrer">Связаться в&nbsp;мессенджере</a>
+        </div>
+
+        <address class="contact-panel reveal" data-delay="2">
+          <div class="contact-row">
+            <span class="contact-label">Email</span>
+            <a class="contact-value" href="mailto:byme.concept@mail.ru">byme.concept@mail.ru</a>
+          </div>
+          <div class="contact-row">
+            <span class="contact-label">Телефон</span>
+            <a class="contact-value" href="tel:+79153033090">+7 (915) 303 30 90</a>
+          </div>
+          <div class="contact-row">
+            <span class="contact-label">Адрес магазина</span>
+            <span class="contact-value">г. Москва, «Серебряный фонтан»<br>Новоалексеевская улица, 16к5</span>
+          </div>
+          <div class="contact-row">
+            <span class="contact-label">Социальные сети</span>
+            <span class="contact-value"><a href="#">Telegram</a> · <a href="#">Instagram*</a></span>
+            <p class="meta-note">* Принадлежит Meta, организация признана экстремистской и&nbsp;запрещена в&nbsp;РФ.</p>
+          </div>
+        </address>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>BY ME × Wedding Partner</span>
+      <a href="#top">Наверх</a>
+    </div>
+  </footer>
+
+  <script>
+    const revealItems = document.querySelectorAll('.reveal, .process-item');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.14,
+      rootMargin: '0px 0px -8% 0px'
+    });
+
+    revealItems.forEach((item) => observer.observe(item));
+
+    const burgerToggle = document.querySelector('.burger-toggle');
+    const menuCloseItems = document.querySelectorAll('[data-menu-close]');
+
+    function setMenuState(isOpen) {
+      document.body.classList.toggle('menu-open', isOpen);
+      burgerToggle?.setAttribute('aria-expanded', String(isOpen));
+    }
+
+    burgerToggle?.addEventListener('click', () => {
+      setMenuState(!document.body.classList.contains('menu-open'));
+    });
+
+    menuCloseItems.forEach((item) => {
+      item.addEventListener('click', () => setMenuState(false));
+    });
+
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setMenuState(false);
+    });
+  </script>
+</body>
+</html>
